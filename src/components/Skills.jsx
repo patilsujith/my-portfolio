@@ -89,7 +89,7 @@ const Skills = () => {
     <section id="skills" style={styles.section}>
       <div style={styles.container}>
         <h2 style={styles.heading}>Skills</h2>
-        <div style={styles.grid}>
+        <div style={styles.grid} className="mobile-flex">
           {skillGroups.map((group) => (
             <div key={group.title} style={styles.card}>
               <h3 style={styles.groupTitle}>{group.title}</h3>

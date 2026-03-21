@@ -85,7 +85,7 @@ const Projects = () => {
           marked repositories as private and they will be shared when we have
           conversations about them.
         </p>
-        <div style={styles.grid}>
+        <div style={styles.grid} className="mobile-flex">
           {projects.map((p) => (
             <div key={p.title} style={styles.card}>
               <div style={styles.cardTop}>
@@ -144,6 +144,7 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     gap: "12px",
+    backgroundColor: "rgb(255, 255, 255)",
   },
   cardTop: {
     display: "flex",

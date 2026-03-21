@@ -29,3 +29,20 @@ a {
 a:visited {
   color: #16a34a;
 }
+
+@media (max-width: 768px) {
+  nav ul {
+    display: none !important;
+  }
+  .mobile-flex {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  section {
+    padding: 40px 16px !important;
+  }
+  .footer__inner {
+    flex-direction: column;
+    gap: 16px;
+  }
+}

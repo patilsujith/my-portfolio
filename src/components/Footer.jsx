@@ -23,7 +23,7 @@ const footerRight = {
 
 export default function Footer() {
   return (
-    <footer className="footer">
+    <footer id="contact" className="footer">
       <div className="container footer__inner" style={footerLayout}>
         <div className="footer__left">
           <span className="footer__muted">

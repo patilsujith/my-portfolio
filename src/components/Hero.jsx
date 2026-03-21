@@ -72,7 +72,7 @@ const Hero = () => {
         {/* What I Do */}
         <div>
           <p style={styles.sectionLabel}>What I Do</p>
-          <div style={styles.highlightsGrid}>
+          <div style={styles.highlightsGrid} className="mobile-flex">
             {highlights.map((h) => (
               <div key={h.title} style={styles.highlightCard}>
                 <div>

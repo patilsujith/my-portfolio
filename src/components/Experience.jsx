@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const jobs = [
   {
@@ -111,8 +111,175 @@ const jobs = [
 
 const Experience = () => {
   const [active, setActive] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+  const [expanded, setExpanded] = useState(null);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
   const job = jobs[active];
 
+  // Mobile: accordion layout
+  if (isMobile) {
+    return (
+      <section
+        id="experience"
+        style={{ ...styles.section, padding: "40px 16px" }}
+      >
+        <div style={styles.container}>
+          <h2 style={styles.heading}>Experience</h2>
+          <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+            {jobs.map((j, i) => {
+              const isOpen = expanded === i;
+              return (
+                <div
+                  key={j.company}
+                  style={{
+                    border: "1px solid",
+                    borderColor: isOpen ? "#2563eb" : "#e5e7eb",
+                    borderRadius: "6px",
+                    overflow: "hidden",
+                  }}
+                >
+                  {/* Accordion header */}
+                  <button
+                    onClick={() => setExpanded(isOpen ? null : i)}
+                    style={{
+                      width: "100%",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      padding: "14px 16px",
+                      background: isOpen ? "#eff6ff" : "#fff",
+                      border: "none",
+                      cursor: "pointer",
+                      textAlign: "left",
+                      gap: "8px",
+                    }}
+                  >
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "8px",
+                          marginBottom: "2px",
+                        }}
+                      >
+                        <span
+                          style={{
+                            fontSize: "14px",
+                            fontWeight: "600",
+                            color: "#111",
+                          }}
+                        >
+                          {j.company}
+                        </span>
+                        {j.current && (
+                          <span
+                            style={{
+                              fontSize: "9px",
+                              backgroundColor: "#dcfce7",
+                              color: "#15803d",
+                              padding: "2px 6px",
+                              borderRadius: "999px",
+                              fontWeight: "700",
+                              flexShrink: 0,
+                            }}
+                          >
+                            Now
+                          </span>
+                        )}
+                      </div>
+                      <div style={{ fontSize: "12px", color: "#666" }}>
+                        {j.role} · {j.period}
+                      </div>
+                    </div>
+                    <span
+                      style={{
+                        fontSize: "16px",
+                        color: "#999",
+                        flexShrink: 0,
+                        transform: isOpen ? "rotate(180deg)" : "none",
+                        transition: "transform 0.2s",
+                      }}
+                    >
+                      ▾
+                    </span>
+                  </button>
+
+                  {/* Accordion body */}
+                  {isOpen && (
+                    <div
+                      style={{
+                        padding: "16px",
+                        borderTop: "1px solid #e5e7eb",
+                        backgroundColor: "#fff",
+                      }}
+                    >
+                      <p
+                        style={{
+                          fontSize: "12px",
+                          color: "#888",
+                          marginBottom: "12px",
+                        }}
+                      >
+                        📍 {j.location}
+                      </p>
+                      <ul style={{ paddingLeft: "16px", marginBottom: "14px" }}>
+                        {j.bullets.map((b, idx) => (
+                          <li
+                            key={idx}
+                            style={{
+                              fontSize: "13px",
+                              color: "#444",
+                              lineHeight: 1.7,
+                              marginBottom: "5px",
+                            }}
+                          >
+                            {b}
+                          </li>
+                        ))}
+                      </ul>
+                      <div
+                        style={{
+                          display: "flex",
+                          flexWrap: "wrap",
+                          gap: "5px",
+                        }}
+                      >
+                        {j.tech.map((t) => (
+                          <span
+                            key={t}
+                            style={{
+                              padding: "3px 9px",
+                              backgroundColor: "#f3f4f6",
+                              color: "#555",
+                              fontSize: "11px",
+                              borderRadius: "4px",
+                              border: "1px solid #e5e7eb",
+                            }}
+                          >
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  // Desktop: tab sidebar layout
   return (
     <section id="experience" style={styles.section}>
       <div style={styles.container}>
@@ -129,7 +296,15 @@ const Experience = () => {
                   ...(active === i ? styles.tabActive : {}),
                 }}
               >
-                <span style={styles.tabCompany}>{j.company}</span>
+                <span
+                  style={{
+                    ...styles.tabCompany,
+                    color: active === i ? "#1d4ed8" : "#333",
+                    fontWeight: active === i ? "600" : "400",
+                  }}
+                >
+                  {j.company}
+                </span>
                 {j.current && <span style={styles.badge}>Now</span>}
               </button>
             ))}
@@ -169,34 +344,35 @@ const Experience = () => {
 
 const styles = {
   section: {
-    padding: "64px 40px",
+    padding: "56px 40px",
     borderBottom: "1px solid #e5e7eb",
+    backgroundColor: "rgb(255, 255, 255)",
   },
   container: { maxWidth: "960px", margin: "0 auto" },
   heading: {
-    fontSize: "24px",
+    fontSize: "22px",
     fontWeight: "700",
     color: "#111",
-    marginBottom: "32px",
+    marginBottom: "28px",
     letterSpacing: "-0.01em",
   },
-  layout: { display: "flex", gap: "32px", alignItems: "flex-start" },
+  layout: { display: "flex", gap: "28px", alignItems: "flex-start" },
   sidebar: {
     display: "flex",
     flexDirection: "column",
-    minWidth: "180px",
+    minWidth: "175px",
     borderLeft: "2px solid #e5e7eb",
   },
   tab: {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    padding: "12px 16px",
+    padding: "10px 14px",
     background: "none",
     border: "none",
     cursor: "pointer",
     textAlign: "left",
-    gap: "8px",
+    gap: "6px",
     borderLeft: "2px solid transparent",
     marginLeft: "-2px",
   },
@@ -206,39 +382,39 @@ const styles = {
   },
   tabCompany: { fontSize: "13px", color: "#333", fontWeight: "500" },
   badge: {
-    fontSize: "10px",
+    fontSize: "9px",
     backgroundColor: "#dcfce7",
     color: "#15803d",
     padding: "2px 6px",
     borderRadius: "999px",
-    fontWeight: "600",
+    fontWeight: "700",
   },
   content: { flex: 1 },
   roleRow: {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "flex-start",
-    marginBottom: "20px",
+    marginBottom: "18px",
     gap: "16px",
   },
   role: {
-    fontSize: "18px",
+    fontSize: "17px",
     fontWeight: "700",
     color: "#111",
-    marginBottom: "4px",
+    marginBottom: "3px",
   },
-  meta: { fontSize: "13px", color: "#666" },
-  period: { fontSize: "12px", color: "#888", whiteSpace: "nowrap" },
-  bullets: { paddingLeft: "18px", marginBottom: "20px" },
+  meta: { fontSize: "13px", color: "#777" },
+  period: { fontSize: "12px", color: "#999", whiteSpace: "nowrap" },
+  bullets: { paddingLeft: "18px", marginBottom: "18px" },
   bullet: {
-    fontSize: "14px",
+    fontSize: "13px",
     color: "#444",
     lineHeight: 1.7,
-    marginBottom: "6px",
+    marginBottom: "5px",
   },
-  techRow: { display: "flex", flexWrap: "wrap", gap: "6px" },
+  techRow: { display: "flex", flexWrap: "wrap", gap: "5px" },
   techTag: {
-    padding: "3px 10px",
+    padding: "3px 9px",
     backgroundColor: "#f3f4f6",
     color: "#555",
     fontSize: "11px",
