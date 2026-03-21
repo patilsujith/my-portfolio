@@ -1,36 +1,51 @@
-import { NavLink } from "react-router-dom";
-import { siteData } from "../content/siteData";
+const Navbar = () => {
+  const links = ["About", "Projects", "Experience", "Skills", "Contact"];
 
-const links = [
-  { to: "/", label: "Home" },
-  { to: "/about", label: "About" },
-  { to: "/projects", label: "Projects" },
-  { to: "/contact", label: "Contact" },
-];
-
-export default function Navbar() {
   return (
-    <header className="navbar">
-      <div className="container navbar__inner">
-        <NavLink to="/" className="brand">
-          <span className="brand__name">{siteData.name}</span>
-        </NavLink>
-
-        <nav className="nav">
-          {links.map((l) => (
-            <NavLink
-              key={l.to}
-              to={l.to}
-              className={({ isActive }) =>
-                `nav__link ${isActive ? "nav__link--active" : ""}`
-              }
-              end={l.to === "/"}
-            >
-              {l.label}
-            </NavLink>
-          ))}
-        </nav>
-      </div>
-    </header>
+    <nav style={styles.nav}>
+      <span style={styles.logo}>Sujith Patil</span>
+      <ul style={styles.links}>
+        {links.map((link) => (
+          <li key={link}>
+            <a href={`#${link.toLowerCase()}`} style={styles.link}>
+              {link}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
   );
-}
+};
+
+const styles = {
+  nav: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: "16px 40px",
+    borderBottom: "1px solid #e5e7eb",
+    backgroundColor: "#fff",
+    position: "sticky",
+    top: 0,
+    zIndex: 100,
+  },
+  logo: {
+    fontWeight: "700",
+    fontSize: "2.4rem",
+    color: "#111",
+    letterSpacing: "-0.01em",
+  },
+  links: {
+    display: "flex",
+    gap: "28px",
+    listStyle: "none",
+    margin: 0,
+    padding: 0,
+  },
+  link: {
+    textDecoration: "none",
+    fontSize: "14px",
+  },
+};
+
+export default Navbar;

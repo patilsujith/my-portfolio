@@ -1,30 +1,65 @@
-import { siteData } from '../content/siteData'
+import { siteData } from "../content/siteData";
+
+const footerStyle = {
+  display: "flex",
+  justifyContent: "space-between",
+  fontSize: "1.6rem",
+  color: "#999",
+};
+
+const footerLayout = {
+  display: "flex",
+  padding: "20px",
+  justifyContent: "space-between",
+  fontSize: "1.6rem",
+};
+
+const footerRight = {
+  display: "flex",
+  gap: "10px",
+  fontSize: "1.6rem",
+  color: "#bbb",
+};
 
 export default function Footer() {
-  const year = new Date().getFullYear()
-
   return (
     <footer className="footer">
-      <div className="container footer__inner">
+      <div className="container footer__inner" style={footerLayout}>
         <div className="footer__left">
           <span className="footer__muted">
-            © {year} {siteData.name}. All rights reserved.
+            <footer style={footerStyle}>
+              <span>
+                © 2025 Sujith Patil · Södertälje, Sweden · AEM Full Stack &
+                Frontend Developer
+              </span>
+            </footer>
           </span>
         </div>
 
-        <div className="footer__right">
-          <a className="footer__link" href={siteData.links.github}>
+        <div className="footer__right" style={footerRight}>
+          <a
+            target="_blank"
+            className="footer__link"
+            href={siteData.links.github}
+          >
             GitHub
           </a>
-          <a className="footer__link" href={siteData.links.linkedin}>
+          <a
+            target="_blank"
+            className="footer__link"
+            href={siteData.links.linkedin}
+          >
             LinkedIn
           </a>
-          <a className="footer__link" href={`mailto:${siteData.email}`}>
+          <a
+            target="_blank"
+            className="footer__link"
+            href={`mailto:${siteData.email}`}
+          >
             Email
           </a>
         </div>
       </div>
     </footer>
-  )
+  );
 }
-

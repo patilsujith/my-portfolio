@@ -6,11 +6,11 @@ export const siteData = {
   location: "Remote / Your City",
   tagline:
     "I build clean, fast, user-friendly web experiences with React and modern tooling.",
-  email: "hello@example.com",
+  email: "emailpatilsujith19@gmail.com",
   avatarSrc: avatarImg,
   links: {
-    github: "https://github.com/your-username",
-    linkedin: "https://www.linkedin.com/in/your-username/",
+    github: "https://github.com/patilsujith",
+    linkedin: "https://www.linkedin.com/in/sujith-patil-529014360",
     resume: "#",
   },
   skills: [
