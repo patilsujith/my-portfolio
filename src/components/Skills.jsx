@@ -82,6 +82,10 @@ const skillGroups = [
       "AXE Library",
     ],
   },
+  {
+    title: "AI tools",
+    skills: ["Cursor", "Codex", "Amazon Q", "Claude", "Ollama"],
+  },
 ];
 
 const Skills = () => {
