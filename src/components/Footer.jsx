@@ -21,6 +21,10 @@ const footerRight = {
   color: "#bbb",
 };
 
+const getYear = () => {
+  return new Date().getFullYear();
+};
+
 export default function Footer() {
   return (
     <footer id="contact" className="footer">
@@ -29,8 +33,8 @@ export default function Footer() {
           <span className="footer__muted">
             <footer style={footerStyle}>
               <span>
-                © 2025 Sujith Patil · Södertälje, Sweden · AEM Full Stack &
-                Frontend Developer
+                © {getYear()} Sujith Patil · Södertälje, Sweden · AEM Full Stack
+                & Frontend Developer
               </span>
             </footer>
           </span>
