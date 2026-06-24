@@ -21,6 +21,17 @@ const projects = [
       "PostGRESQL",
       "Electron.js",
     ],
+  },{
+    title: "Live Website Debugger tool",
+    company: "Gear Second Innovations",
+    description:
+      "Built a tool using Express.js and Chrome extension to help developers debug live production website by intercepting specified libraries and mapping them to the local file system.",
+    highlight: "github",
+    tech: [
+      "Chrome Extension",
+      "Express.js",
+      "Node.js"
+    ],
   },
   {
     title: "Open Source AI powered Search Engine",
