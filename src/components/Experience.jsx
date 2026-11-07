@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const jobs = [
   {
@@ -8,7 +8,7 @@ const jobs = [
     location: "Södertälje, Sweden",
     current: true,
     bullets: [
-      "Designed custom AEM forms solution, saving €80k/year in licensing costs",
+      "Designed custom AEM forms solution, saving approximately €90k/year in licensing costs",
       "Built AWS Lambda functions to automate AEM Content Fragment creation",
       "Integrated SOLR search engine for improved site search",
       "Developed dark/light mode image component based on brightness detection",
@@ -109,318 +109,90 @@ const jobs = [
   },
 ];
 
+function JobDetails({ job }) {
+  return (
+    <>
+      <ul className="experience-bullets">
+        {job.bullets.map((bullet, index) => (
+          <li key={index}>{bullet}</li>
+        ))}
+      </ul>
+      <div className="experience-techRow">
+        {job.tech.map((tech) => (
+          <span key={tech} className="experience-techTag">{tech}</span>
+        ))}
+      </div>
+    </>
+  );
+}
+
 const Experience = () => {
   const [active, setActive] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
   const [expanded, setExpanded] = useState(null);
-
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
-  }, []);
-
   const job = jobs[active];
 
-  // Mobile: accordion layout
-  if (isMobile) {
-    return (
-      <section
-        id="experience"
-        style={{ ...styles.section, padding: "40px 16px" }}
-      >
-        <div style={styles.container}>
-          <h2 style={styles.heading}>Experience</h2>
-          <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-            {jobs.map((j, i) => {
-              const isOpen = expanded === i;
-              return (
-                <div
-                  key={j.company}
-                  style={{
-                    border: "1px solid",
-                    borderColor: isOpen ? "#2563eb" : "#e5e7eb",
-                    borderRadius: "6px",
-                    overflow: "hidden",
-                  }}
-                >
-                  {/* Accordion header */}
-                  <button
-                    onClick={() => setExpanded(isOpen ? null : i)}
-                    style={{
-                      width: "100%",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      padding: "14px 16px",
-                      background: isOpen ? "#eff6ff" : "#fff",
-                      border: "none",
-                      cursor: "pointer",
-                      textAlign: "left",
-                      gap: "8px",
-                    }}
-                  >
-                    <div style={{ flex: 1, minWidth: 0 }}>
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "8px",
-                          marginBottom: "2px",
-                        }}
-                      >
-                        <span
-                          style={{
-                            fontSize: "14px",
-                            fontWeight: "600",
-                            color: "#111",
-                          }}
-                        >
-                          {j.company}
-                        </span>
-                        {j.current && (
-                          <span
-                            style={{
-                              fontSize: "9px",
-                              backgroundColor: "#dcfce7",
-                              color: "#15803d",
-                              padding: "2px 6px",
-                              borderRadius: "999px",
-                              fontWeight: "700",
-                              flexShrink: 0,
-                            }}
-                          >
-                            Now
-                          </span>
-                        )}
-                      </div>
-                      <div style={{ fontSize: "12px", color: "#666" }}>
-                        {j.role} · {j.period}
-                      </div>
-                    </div>
-                    <span
-                      style={{
-                        fontSize: "16px",
-                        color: "#999",
-                        flexShrink: 0,
-                        transform: isOpen ? "rotate(180deg)" : "none",
-                        transition: "transform 0.2s",
-                      }}
-                    >
-                      ▾
-                    </span>
-                  </button>
-
-                  {/* Accordion body */}
-                  {isOpen && (
-                    <div
-                      style={{
-                        padding: "16px",
-                        borderTop: "1px solid #e5e7eb",
-                        backgroundColor: "#fff",
-                      }}
-                    >
-                      <p
-                        style={{
-                          fontSize: "12px",
-                          color: "#888",
-                          marginBottom: "12px",
-                        }}
-                      >
-                        📍 {j.location}
-                      </p>
-                      <ul style={{ paddingLeft: "16px", marginBottom: "14px" }}>
-                        {j.bullets.map((b, idx) => (
-                          <li
-                            key={idx}
-                            style={{
-                              fontSize: "13px",
-                              color: "#444",
-                              lineHeight: 1.7,
-                              marginBottom: "5px",
-                            }}
-                          >
-                            {b}
-                          </li>
-                        ))}
-                      </ul>
-                      <div
-                        style={{
-                          display: "flex",
-                          flexWrap: "wrap",
-                          gap: "5px",
-                        }}
-                      >
-                        {j.tech.map((t) => (
-                          <span
-                            key={t}
-                            style={{
-                              padding: "3px 9px",
-                              backgroundColor: "#f3f4f6",
-                              color: "#555",
-                              fontSize: "11px",
-                              borderRadius: "4px",
-                              border: "1px solid #e5e7eb",
-                            }}
-                          >
-                            {t}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  // Desktop: tab sidebar layout
   return (
-    <section id="experience" style={styles.section}>
-      <div style={styles.container}>
-        <h2 style={styles.heading}>Experience</h2>
-        <div style={styles.layout}>
-          {/* Sidebar */}
-          <div style={styles.sidebar}>
-            {jobs.map((j, i) => (
+    <section id="experience" className="experience-section">
+      <div className="experience-container">
+        <h2 className="experience-heading">Experience</h2>
+        <div className="experience-layout">
+          <div className="experience-sidebar">
+            {jobs.map((entry, index) => (
               <button
-                key={j.company}
-                onClick={() => setActive(i)}
-                style={{
-                  ...styles.tab,
-                  ...(active === i ? styles.tabActive : {}),
-                }}
+                key={entry.company}
+                className="experience-tab"
+                aria-pressed={active === index}
+                onClick={() => setActive(index)}
               >
-                <span
-                  style={{
-                    ...styles.tabCompany,
-                    color: active === i ? "#1d4ed8" : "#333",
-                    fontWeight: active === i ? "600" : "400",
-                  }}
-                >
-                  {j.company}
-                </span>
-                {j.current && <span style={styles.badge}>Now</span>}
+                {entry.company}
+                {entry.current && <span className="experience-badge">Now</span>}
               </button>
             ))}
           </div>
-
-          {/* Content */}
-          <div style={styles.content}>
-            <div style={styles.roleRow}>
+          <div className="experience-content">
+            <div className="experience-roleRow">
               <div>
-                <h3 style={styles.role}>{job.role}</h3>
-                <p style={styles.meta}>
-                  {job.company} · {job.location}
-                </p>
+                <h3>{job.role}</h3>
+                <p>{job.company} · {job.location}</p>
               </div>
-              <span style={styles.period}>{job.period}</span>
+              <span className="experience-period">{job.period}</span>
             </div>
-            <ul style={styles.bullets}>
-              {job.bullets.map((b, i) => (
-                <li key={i} style={styles.bullet}>
-                  {b}
-                </li>
-              ))}
-            </ul>
-            <div style={styles.techRow}>
-              {job.tech.map((t) => (
-                <span key={t} style={styles.techTag}>
-                  {t}
-                </span>
-              ))}
-            </div>
+            <JobDetails job={job} />
           </div>
+        </div>
+
+        <div className="experience-accordion">
+          {jobs.map((entry, index) => {
+            const isOpen = expanded === index;
+            const panelId = `experience-job-${index}`;
+            return (
+              <div key={entry.company} className="experience-disclosure">
+                <button
+                  className="experience-tab"
+                  aria-expanded={isOpen}
+                  aria-controls={panelId}
+                  onClick={() => setExpanded(isOpen ? null : index)}
+                >
+                  <span>
+                    <span className="experience-company">
+                      {entry.company}
+                      {entry.current && <span className="experience-badge">Now</span>}
+                    </span>
+                    <span className="experience-period">{entry.role} · {entry.period}</span>
+                  </span>
+                  <span aria-hidden="true">{isOpen ? "▴" : "▾"}</span>
+                </button>
+                <div id={panelId} className="experience-content" hidden={!isOpen}>
+                  <p className="experience-location">📍 {entry.location}</p>
+                  <JobDetails job={entry} />
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
   );
-};
-
-const styles = {
-  section: {
-    padding: "56px 40px",
-    borderBottom: "1px solid #e5e7eb",
-    backgroundColor: "rgb(255, 255, 255)",
-  },
-  container: { maxWidth: "960px", margin: "0 auto" },
-  heading: {
-    fontSize: "22px",
-    fontWeight: "700",
-    color: "#111",
-    marginBottom: "28px",
-    letterSpacing: "-0.01em",
-  },
-  layout: { display: "flex", gap: "28px", alignItems: "flex-start" },
-  sidebar: {
-    display: "flex",
-    flexDirection: "column",
-    minWidth: "175px",
-    borderLeft: "2px solid #e5e7eb",
-  },
-  tab: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    padding: "10px 14px",
-    background: "none",
-    border: "none",
-    cursor: "pointer",
-    textAlign: "left",
-    gap: "6px",
-    borderLeft: "2px solid transparent",
-    marginLeft: "-2px",
-  },
-  tabActive: {
-    borderLeftColor: "#2563eb",
-    backgroundColor: "#eff6ff",
-  },
-  tabCompany: { fontSize: "13px", color: "#333", fontWeight: "500" },
-  badge: {
-    fontSize: "9px",
-    backgroundColor: "#dcfce7",
-    color: "#15803d",
-    padding: "2px 6px",
-    borderRadius: "999px",
-    fontWeight: "700",
-  },
-  content: { flex: 1 },
-  roleRow: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "flex-start",
-    marginBottom: "18px",
-    gap: "16px",
-  },
-  role: {
-    fontSize: "17px",
-    fontWeight: "700",
-    color: "#111",
-    marginBottom: "3px",
-  },
-  meta: { fontSize: "13px", color: "#777" },
-  period: { fontSize: "12px", color: "#999", whiteSpace: "nowrap" },
-  bullets: { paddingLeft: "18px", marginBottom: "18px" },
-  bullet: {
-    fontSize: "13px",
-    color: "#444",
-    lineHeight: 1.7,
-    marginBottom: "5px",
-  },
-  techRow: { display: "flex", flexWrap: "wrap", gap: "5px" },
-  techTag: {
-    padding: "3px 9px",
-    backgroundColor: "#f3f4f6",
-    color: "#555",
-    fontSize: "11px",
-    borderRadius: "4px",
-    border: "1px solid #e5e7eb",
-  },
 };
 
 export default Experience;

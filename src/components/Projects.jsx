@@ -3,15 +3,23 @@ const projects = [
     title: "AEM Custom Forms Solution",
     company: "Scania CV AB",
     description:
-      "Replaced a third-party licensed AEM forms product with a fully custom-built solution, delivering identical functionality at zero licensing cost.",
-    highlight: "€80k/yr saved",
+      "Designed and deployed a production forms platform that replaced licensed Adobe Forms functionality. The custom solution integrated directly into Scania's AEM authoring environment and preserved the existing forms functionality, saving approximately €90,000 per year in licensing costs.",
+    highlight: "€90k/yr saved",
     tech: ["AEM", "Java", "Sling Models", "JavaScript"],
+  },
+  {
+    title: "CMS Modernization & Migration",
+    company: "Scania CV AB",
+    description:
+      "Architected the migration of a CMS from AEM to a standalone web application built with React, Spring Boot, MongoDB, and AWS. The migration reduced annual platform costs by approximately €60,000.",
+    highlight: "€60k/yr saved",
+    tech: ["React", "Spring Boot", "MongoDB", "AWS"],
   },
   {
     title: "No code testing tool",
     company: "Gear Second Innovations",
     description:
-      "Built a no code testing tool using React.js and TypeScript to help users test their websites and applications.",
+      "Built a desktop testing tool with React, TypeScript, and Electron. Its no-code interface lets users test websites and applications without writing test scripts.",
     highlight: "github",
     tech: [
       "React.js",
@@ -21,23 +29,20 @@ const projects = [
       "PostGRESQL",
       "Electron.js",
     ],
-  },{
+  },
+  {
     title: "Live Website Debugger tool",
     company: "Gear Second Innovations",
     description:
       "Built a tool using Express.js and Chrome extension to help developers debug live production website by intercepting specified libraries and mapping them to the local file system.",
     highlight: "github",
-    tech: [
-      "Chrome Extension",
-      "Express.js",
-      "Node.js"
-    ],
+    tech: ["Chrome Extension", "Express.js", "Node.js"],
   },
   {
     title: "Open Source AI powered Search Engine",
     company: "Gear Second Innovations",
     description:
-      "Built an open source AI powered search engine using Ollama and Llama3 models to help users search for information on the companys websites and applications. The search was specific to companys data and not the internet.",
+      "Built and deployed an open-source AI search engine for company websites and applications. It uses retrieval-augmented generation to supply Llama 3, running through Ollama, with relevant company information before generating an answer. Search is scoped to the company's own content.",
     highlight: "github",
     tech: ["AWS Lambda", "Ollama", "Llama3", "EC2"],
   },
@@ -45,7 +50,7 @@ const projects = [
     title: "Headless CMS (Apache Sling)",
     company: "Scania CV AB",
     description:
-      "Currently building a custom headless CMS on Apache Sling to decouple content management from frontend delivery.",
+      "Building a custom headless CMS on Apache Sling and Java. The design separates content management from presentation and exposes content through REST APIs so frontends can consume it independently.",
     highlight: "In Progress",
     tech: ["Apache Sling", "Java", "REST APIs"],
   },
@@ -53,7 +58,7 @@ const projects = [
     title: "SOLR Search Integration",
     company: "Scania CV AB",
     description:
-      "Integrated Apache SOLR into Scania's internal platform, replacing default search with a fast, faceted, and relevance-tuned engine.",
+      "Integrated Apache SOLR into Scania's internal CMS platform to replace its default search. Faceted results let users narrow their queries, and relevance tuning helps surface the most useful matches first.",
     highlight: null,
     tech: ["Apache SOLR", "AEM", "React.js"],
   },
@@ -61,7 +66,7 @@ const projects = [
     title: "AWS Lambda + Content Fragments",
     company: "Scania CV AB",
     description:
-      "Built serverless Lambda functions to automate AEM Content Fragment creation, removing manual authoring effort entirely.",
+      "Built serverless AWS Lambda functions to create AEM Content Fragments automatically, removing the need for authors to create each fragment by hand. This was part of broader AEM authoring automation using Sling Jobs, workflows, event handlers, and schedulers.",
     highlight: null,
     tech: ["AWS Lambda", "AEM", "Node.js"],
   },
@@ -69,7 +74,7 @@ const projects = [
     title: "Startup Product UI",
     company: "Confidential Startup",
     description:
-      "As founder, designed and built the complete frontend of a SaaS product — user-facing UI, admin dashboard, and component library — from scratch.",
+      "As founder, designed and built the SaaS frontend from scratch, including responsive customer-facing views, an admin dashboard, and a reusable component library. The work also included dashboard features and integrations using GraphQL, Firebase, and AWS Lambda.",
     highlight: "Co-Founder",
     tech: ["Next.js", "Redux Toolkit", "Firebase", "Tailwind CSS", "GraphQL"],
   },
@@ -77,7 +82,7 @@ const projects = [
     title: "SEO & Accessibility Tool",
     company: "Scania CV AB",
     description:
-      "Built an internal tool using the AXE library for automated accessibility auditing and SEO checks, integrated into the AEM authoring workflow.",
+      "Built an internal tool that brings automated accessibility audits and SEO checks into the AEM authoring workflow. The axe library checks for accessibility issues so authors can review findings and address them before publication.",
     highlight: "WCAG",
     tech: ["AXE Library", "JavaScript", "AEM"],
   },
@@ -85,10 +90,10 @@ const projects = [
 
 const Projects = () => {
   return (
-    <section id="projects" style={styles.section}>
-      <div style={styles.container}>
-        <h2 style={styles.heading}>Key Projects</h2>
-        <p style={styles.description}>
+    <section id="projects" className="projects-section">
+      <div className="projects-container">
+        <h2 className="projects-heading">Key Projects</h2>
+        <p className="projects-description">
           Here are some of the projects I have worked on. Unfortunatley I can't
           share the code for some of the projects due to confidentiality
           agreements or due to them being part of my work. I have marked
@@ -96,103 +101,35 @@ const Projects = () => {
           marked repositories as private and they will be shared when we have
           conversations about them.
         </p>
-        <div style={styles.grid} className="mobile-flex">
-          {projects.map((p) => (
-            <div key={p.title} style={styles.card}>
-              <div style={styles.cardTop}>
+        <div className="projects-grid">
+          {projects.map((p, index) => (
+            <article key={p.title} className="projects-card">
+              <div className="projects-cardTop">
+                <span className="projects-index" aria-hidden="true">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
                 <div>
-                  <h3 style={styles.title}>{p.title}</h3>
-                  <p style={styles.company}>{p.company}</p>
+                  <h3 className="projects-title">{p.title}</h3>
+                  <p className="projects-company">{p.company}</p>
                 </div>
                 {p.highlight && (
-                  <span style={styles.highlight}>{p.highlight}</span>
+                  <span className="projects-highlight">{p.highlight}</span>
                 )}
               </div>
-              <p style={styles.desc}>{p.description}</p>
-              <div style={styles.techRow}>
+              <p className="projects-desc">{p.description}</p>
+              <div className="projects-techRow">
                 {p.tech.map((t) => (
-                  <span key={t} style={styles.tech}>
+                  <span key={t} className="projects-tech">
                     {t}
                   </span>
                 ))}
               </div>
-            </div>
+            </article>
           ))}
         </div>
       </div>
     </section>
   );
-};
-
-const styles = {
-  description: {
-    fontSize: "1.4rem",
-    color: "#555",
-    lineHeight: 1.65,
-    marginBottom: "32px",
-  },
-  section: {
-    padding: "64px 40px",
-    borderBottom: "1px solid #e5e7eb",
-  },
-  container: { maxWidth: "960px", margin: "0 auto" },
-  heading: {
-    fontSize: "24px",
-    fontWeight: "700",
-    color: "#111",
-    marginBottom: "32px",
-    letterSpacing: "-0.01em",
-  },
-  grid: {
-    display: "grid",
-    gridTemplateColumns: "repeat(2, 1fr)",
-    gap: "16px",
-  },
-  card: {
-    padding: "24px",
-    border: "1px solid #e5e7eb",
-    borderRadius: "6px",
-    display: "flex",
-    flexDirection: "column",
-    gap: "12px",
-    backgroundColor: "rgb(255, 255, 255)",
-  },
-  cardTop: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "flex-start",
-    gap: "12px",
-  },
-  title: {
-    fontSize: "15px",
-    fontWeight: "600",
-    color: "#111",
-    marginBottom: "2px",
-  },
-  company: { fontSize: "12px", color: "#888" },
-  highlight: {
-    padding: "3px 10px",
-    backgroundColor: "#eff6ff",
-    color: "#16A34A",
-    fontSize: "11px",
-    borderRadius: "999px",
-    fontWeight: "600",
-    whiteSpace: "nowrap",
-  },
-  desc: {
-    fontSize: "13px",
-    color: "#555",
-    lineHeight: 1.65,
-  },
-  techRow: { display: "flex", flexWrap: "wrap", gap: "5px", marginTop: "auto" },
-  tech: {
-    padding: "3px 8px",
-    backgroundColor: "#f3f4f6",
-    color: "#555",
-    fontSize: "11px",
-    borderRadius: "4px",
-    border: "1px solid #e5e7eb",
-  },
 };
 
 export default Projects;
